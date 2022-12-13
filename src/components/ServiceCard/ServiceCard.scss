@@ -1,0 +1,43 @@
+.service-card {
+    width: 220px;
+    height: 100%;
+    min-height: 200px;
+    box-shadow: 0px 0px 15px 0px #959595;
+    background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+
+    &-img {
+        height: 300px;
+        object-fit: cover;
+    }
+
+    &-about {
+        padding: 20px 15px 35px 15px;
+    }
+
+    &-title {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    &-info {
+        display: flex;
+        flex-direction: row;
+        column-gap: 4px;
+
+        &-stars {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 4px;
+        }
+    }
+
+    &-description {
+        font-size: 12px;
+        font-weight: 400px;
+    }
+}

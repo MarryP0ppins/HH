@@ -11,7 +11,8 @@ export interface ServiceResponse {
 }
 
 export interface ServicesParams {
-    services_ids?:number[];
+    all?: boolean;
+    services_ids?: number[];
     title?: string;
     price_max?: number;
     price_min?: number;
@@ -27,6 +28,7 @@ export interface ServicesPriceRange {
 export const getServices = async (params?: ServicesParams): Promise<ServiceResponse[]> => {
     return await getApiRequest(`/services/`, {
         params: {
+            all: params?.all,
             title: params?.title,
             price_max: params?.price_max,
             price_min: params?.price_min,

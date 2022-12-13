@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { loaded,loading } from 'store/reducers/loader';
+import { loaded, loading } from 'store/reducers/loader';
 import { FetchStatus } from 'types/api';
 
 export const useLoader = (statuses: FetchStatus[]): void => {

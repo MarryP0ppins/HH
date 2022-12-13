@@ -11,13 +11,13 @@ const cnServiceCard = cn('service-card');
 export const ServiceCard: React.FC<ServiceCardProps> = ({ serviceInfo }) => {
     return (
         <div className={cnServiceCard()}>
-            <AvatarIcon/>
+            <AvatarIcon />
             <div className={cnServiceCard('about')}>
                 <div className={cnServiceCard('title')}>{serviceInfo.title}</div>
                 <div className={cnServiceCard('info-stars')}>
                     <div className={cnServiceCard('description')}>Рейтинг исполнителя:</div>
                     {[...Array<number>(serviceInfo.rating < 0 ? 0 : serviceInfo.rating)].map((_, index) => (
-                        <StarIcon key={index} width={10} height={10}/>
+                        <StarIcon key={index} width={10} height={10} />
                     ))}
                 </div>
                 <div className={cnServiceCard('info')}>

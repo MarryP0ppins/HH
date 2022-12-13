@@ -35,7 +35,12 @@ export const ContractsSigningPage: React.FC = () => {
 
     useEffect(() => {
         if (getServicesStatus === FetchStatus.INITIAL && Boolean(contracts?.length)) {
-            dispatch(getServicesAction({ services_ids: contracts.map((contract) => contract.id) }));
+            dispatch(
+                getServicesAction({
+                    services_ids: contracts.map((contract) => contract.id),
+                    all: true,
+                }),
+            );
         }
     }, [contracts, dispatch, getServicesStatus]);
 
@@ -69,13 +74,13 @@ export const ContractsSigningPage: React.FC = () => {
     return (
         <div className={cnContractsSigningPage()}>
             <div className={cnContractsSigningPage('breadcrumbs')}>
-                <Link to={'/'}>Афиша</Link>
+                <Link to={'/'}>Каталог</Link>
                 <div>{'/'}</div>
-                <div>Корзина покупок</div>
+                <div>Управление договорами</div>
             </div>
             <div className={cnContractsSigningPage('scroll-container')}>
                 <div className={cnContractsSigningPage('container')}>
-                    <div className={cnContractsSigningPage('title')}>Забронированные билеты</div>
+                    <div className={cnContractsSigningPage('title')}>Оформленные договоры</div>
                     <div className={cnContractsSigningPage('orders')}>
                         {Boolean(contracts?.length) &&
                             Boolean(services?.length) &&
@@ -86,14 +91,15 @@ export const ContractsSigningPage: React.FC = () => {
                                         {service && (
                                             <div key={index}>
                                                 <div className={cnContractsSigningPage('mainInfo')}>
-                                                    <AvatarIcon className={cnContractsSigningPage('avatar')}/>
-                                                    {/* <img src={service.img} className={cnContractsSigningPage('img')} /> */}
+                                                    <AvatarIcon className={cnContractsSigningPage('avatar')} />
                                                     <div className={cnContractsSigningPage('info')}>
                                                         <div className={cnContractsSigningPage('info-row')}>
                                                             <div className={cnContractsSigningPage('info-title')}>
                                                                 Название:
                                                             </div>
-                                                            <span className={cnContractsSigningPage('info-description')}>
+                                                            <span
+                                                                className={cnContractsSigningPage('info-description')}
+                                                            >
                                                                 {service.title}
                                                             </span>
                                                         </div>
@@ -101,9 +107,11 @@ export const ContractsSigningPage: React.FC = () => {
                                                             <div className={cnContractsSigningPage('info-title')}>
                                                                 Дата оформления договора:
                                                             </div>
-                                                            <span className={cnContractsSigningPage('info-description')}>
+                                                            <span
+                                                                className={cnContractsSigningPage('info-description')}
+                                                            >
                                                                 {moment(contract.date_of_execution).format(
-                                                                    'D MMMM YYYY, HH:mm',
+                                                                    'D MMMM YYYY',
                                                                 )}
                                                             </span>
                                                         </div>
@@ -111,7 +119,9 @@ export const ContractsSigningPage: React.FC = () => {
                                                             <div className={cnContractsSigningPage('info-title')}>
                                                                 Продолжительность контракта:
                                                             </div>
-                                                            <span className={cnContractsSigningPage('info-description')}>
+                                                            <span
+                                                                className={cnContractsSigningPage('info-description')}
+                                                            >
                                                                 {`${contract.duration} дней`}
                                                             </span>
                                                         </div>
@@ -119,17 +129,21 @@ export const ContractsSigningPage: React.FC = () => {
                                                             <div className={cnContractsSigningPage('info-title')}>
                                                                 Дата окончания договора:
                                                             </div>
-                                                            <span className={cnContractsSigningPage('info-description')}>
+                                                            <span
+                                                                className={cnContractsSigningPage('info-description')}
+                                                            >
                                                                 {moment(contract.date_of_execution)
                                                                     .add(contract.duration, 'd')
-                                                                    .format('D MMMM YYYY, HH:mm')}
+                                                                    .format('D MMMM YYYY')}
                                                             </span>
                                                         </div>
                                                         <div className={cnContractsSigningPage('info-row')}>
                                                             <div className={cnContractsSigningPage('info-title')}>
                                                                 Суммарная стоимость:
                                                             </div>
-                                                            <span className={cnContractsSigningPage('info-description')}>
+                                                            <span
+                                                                className={cnContractsSigningPage('info-description')}
+                                                            >
                                                                 {`${contract.duration * service.price}руб.`}
                                                             </span>
                                                         </div>
@@ -148,7 +162,7 @@ export const ContractsSigningPage: React.FC = () => {
                                                         className={cnContractsSigningPage('button')}
                                                         onClick={handleRejectingContract(contract.id)}
                                                     >
-                                                        Расторгнуть контракт
+                                                        Расторгнуть договор
                                                     </button>
                                                 </div>
                                             </div>

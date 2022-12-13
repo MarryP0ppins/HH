@@ -48,7 +48,7 @@ const servicesSlice = createSlice<ServiceState, SliceCaseReducers<ServiceState>>
                 state.error = null;
             })
             .addCase(getServiceByIdAction.fulfilled, (state, { payload }) => {
-                console.log(payload)
+                console.log(payload);
                 state.getServiceByIdStatus = FetchStatus.FETCHED;
                 state.services = [payload];
                 state.error = null;

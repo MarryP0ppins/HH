@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, Route,Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { ContractIcon } from 'assets';
 import moment from 'moment';
@@ -44,7 +44,7 @@ export const App: React.FC = () => {
                     {isAuthorized ? 'Выйти' : 'Авторизация'}
                 </button>
                 <Link to="/contract-signing">
-                    <ContractIcon width={28} height={28} className={cnApp('contracts')}/>
+                    <ContractIcon width={28} height={28} className={cnApp('contracts')} />
                 </Link>
             </div>
             <Routes>

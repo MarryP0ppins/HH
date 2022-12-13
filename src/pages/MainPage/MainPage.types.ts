@@ -1,5 +1,5 @@
-export interface FilterFormValues{
-    title?:string;
-    priceMin?:number;
-    priceMax?:number
+export interface FilterFormValues {
+    title?: string;
+    priceMin?: number;
+    priceMax?: number;
 }

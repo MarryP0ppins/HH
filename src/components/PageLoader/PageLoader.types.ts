@@ -1,3 +1,3 @@
-export interface PageLoaderProps{
-    zIndex?:number;
+export interface PageLoaderProps {
+    zIndex?: number;
 }

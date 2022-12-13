@@ -92,5 +92,5 @@ const contractsSlice = createSlice<ContractState, SliceCaseReducers<ContractStat
     },
 });
 
-export const resetContractsState = contractsSlice.actions.reset  as ActionCreatorWithoutPayload<string>;
+export const resetContractsState = contractsSlice.actions.reset as ActionCreatorWithoutPayload<string>;
 export const contractsReducer = contractsSlice.reducer;

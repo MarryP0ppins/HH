@@ -123,7 +123,11 @@ export const MainPage: React.FC = () => {
             </Form>
             <div className={cnMainPage('services-wrapper')}>
                 {services.map((service, serviceIndex) => (
-                    <Link key={serviceIndex} to={`/service/${service.id}`} className={cnMainPage('link', {disabled:!isAuthorized})}>
+                    <Link
+                        key={serviceIndex}
+                        to={`/service/${service.id}`}
+                        className={cnMainPage('link', { disabled: !isAuthorized })}
+                    >
                         <ServiceCard serviceInfo={service} />
                     </Link>
                 ))}

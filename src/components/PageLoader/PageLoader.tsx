@@ -29,7 +29,7 @@ export const PageLoader: React.FC<PageLoaderProps> = ({ zIndex }) => {
         return (
             <div className={CnPageLoader()} style={{ zIndex }}>
                 <div className={CnPageLoader('loader')}>
-                    <LoaderArrows width={300} height={300}/>
+                    <LoaderArrows width={300} height={300} />
                 </div>
             </div>
         );

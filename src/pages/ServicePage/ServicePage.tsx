@@ -50,7 +50,7 @@ export const ServicePage: React.FC = () => {
                     id_service: Number(service_id),
                     date_of_execution: moment().format(),
                     status: ContractStatus.EXECUTION,
-                    duration: Number(hiringDuration)
+                    duration: Number(hiringDuration),
                 }),
             );
             setHiringDuration('');
@@ -81,7 +81,7 @@ export const ServicePage: React.FC = () => {
                                 <div className={cnServicePage('info')}>
                                     <div className={cnServicePage('stars-wrapper')}>
                                         <div className={cnServicePage('info-title')}>Рейтинг:</div>
-                                        <div className={cnServicePage('info-description', {stars:true})}>
+                                        <div className={cnServicePage('info-description', { stars: true })}>
                                             {[...Array<number>(serviceInfo.rating < 0 ? 0 : serviceInfo.rating)].map(
                                                 (_, index) => (
                                                     <StarIcon key={index} width={18} height={18} />

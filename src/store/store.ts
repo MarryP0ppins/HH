@@ -18,5 +18,5 @@ export const store = configureStore({
 
 export type State = ReturnType<typeof store.getState>;
 
-// Use throughout your app instead of plain `useDispatch`
+// Use throughout your app instead of plain `useSelector`
 export const useAppSelector: TypedUseSelectorHook<State> = useSelector;

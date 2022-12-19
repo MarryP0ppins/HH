@@ -3,7 +3,7 @@
         "browser": true,
         "es2020": true
     },
-    "plugins": ["@typescript-eslint", "react", "standard", "react-hooks", "import", "simple-import-sort"],
+    "plugins": ["@typescript-eslint", "standard", "react-hooks", "import", "simple-import-sort"],
     "extends": [
         "prettier",
         "eslint:recommended",

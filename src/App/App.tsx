@@ -1,13 +1,12 @@
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { ContractIcon } from 'assets';
 import moment from 'moment';
+import { AuthPage } from 'pages/AuthPage';
 import { ContractsSigningPage } from 'pages/ContractsSigningPage';
 import { MainPage } from 'pages/MainPage';
 import { ServicePage } from 'pages/ServicePage';
-import { changeAuthorizedState } from 'store/reducers/auth';
 import { useAppSelector } from 'store/store';
 
 import 'moment-timezone';
@@ -28,26 +27,21 @@ moment.tz.setDefault('Europe/Moscow');
 const cnApp = cn('app');
 
 export const App: React.FC = () => {
-    const dispatch = useDispatch();
-
-    const { isAuthorized } = useAppSelector((store) => store.auth);
-
-    const handleChangeAuthState = useCallback(() => {
-        dispatch(changeAuthorizedState());
-    }, [dispatch]);
+    const { isAuthorized } = useAppSelector((store) => store.user);
 
     return (
         <div className={cnApp()}>
             <div className={cnApp('header')}>
-                <h1 className={cnApp('title')}>HH.ru</h1>
-                <button className={cnApp('button')} type="button" onClick={handleChangeAuthState}>
+                <h1 className={cnApp('title')}>PROFI.ru</h1>
+                <Link to="/auth" className={cnApp('button')}>
                     {isAuthorized ? 'Выйти' : 'Авторизация'}
-                </button>
+                </Link>
                 <Link to="/contract-signing">
                     <ContractIcon width={28} height={28} className={cnApp('contracts')} />
                 </Link>
             </div>
             <Routes>
+                <Route path="/auth" element={<AuthPage />} />
                 <Route path="/service/:id/" element={<ServicePage />} />
                 <Route path="/" element={<MainPage />} />
                 <Route path="/contract-signing" element={<ContractsSigningPage />} />

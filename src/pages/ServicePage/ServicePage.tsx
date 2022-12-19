@@ -25,6 +25,7 @@ export const ServicePage: React.FC = () => {
     const [hiringDuration, setHiringDuration] = useState<number | string>();
     const { services, getServiceByIdStatus } = useAppSelector((store) => store.services);
     const { createExecutionContractStatus } = useAppSelector((store) => store.contracts);
+    const {user} = useAppSelector((store)=>store.user)
 
     useLoader([createExecutionContractStatus, getServiceByIdStatus]);
 
@@ -43,11 +44,11 @@ export const ServicePage: React.FC = () => {
     }, []);
 
     const handleExecutedService = useCallback(() => {
-        if (service_id) {
+        if (service_id && user?.id) {
             dispatch(
                 createExecutionContractAction({
-                    id_client: 1,
-                    id_service: Number(service_id),
+                    client: user.id,
+                    service: Number(service_id),
                     date_of_execution: moment().format(),
                     status: ContractStatus.EXECUTION,
                     duration: Number(hiringDuration),
@@ -55,7 +56,7 @@ export const ServicePage: React.FC = () => {
             );
             setHiringDuration('');
         }
-    }, [dispatch, hiringDuration, service_id]);
+    }, [dispatch, hiringDuration, service_id, user?.id]);
 
     useEffect(
         () => () => {

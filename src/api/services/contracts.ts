@@ -1,15 +1,15 @@
 import { deleteApiRequest, getApiRequest, patchApiRequest, postApiRequest } from 'api';
 
 export enum ContractStatus {
-    EXECUTION = 'execution',
-    SIGN = 'sign',
-    RESIGNING = 'resigning',
+    EXECUTION = 'EXECUTION',
+    SIGN = 'SIGN',
+    RESIGNING = 'RESIGNING',
 }
 
 export interface ContractResponse {
     id: number;
-    id_client: number;
-    id_service: number;
+    client: number;
+    service: number;
     duration: number;
     date_of_execution: string;
     date_of_signing: string;
@@ -17,8 +17,8 @@ export interface ContractResponse {
 }
 
 export interface PostContractParams {
-    id_client: number;
-    id_service: number;
+    client: number;
+    service: number;
     date_of_execution?: string;
     date_of_signing?: string;
     status: ContractStatus;

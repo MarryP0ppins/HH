@@ -85,7 +85,7 @@ export const ContractsSigningPage: React.FC = () => {
                         {Boolean(contracts?.length) &&
                             Boolean(services?.length) &&
                             contracts.map((contract, index) => {
-                                const service = services.find((service) => service.id === contract.id_service);
+                                const service = services.find((service) => service.id === contract.service);
                                 return (
                                     <>
                                         {service && (

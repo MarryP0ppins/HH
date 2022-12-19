@@ -22,7 +22,7 @@ export const MainPage: React.FC = () => {
     const { services, getServicesStatus, servicesPriceRange, getServicesPriceRangeStatus } = useAppSelector(
         (store) => store.services,
     );
-    const { isAuthorized } = useAppSelector((store) => store.auth);
+    const { isAuthorized } = useAppSelector((store) => store.user);
 
     useLoader([getServicesStatus, getServicesPriceRangeStatus]);
 

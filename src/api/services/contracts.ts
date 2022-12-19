@@ -33,7 +33,7 @@ export interface PatchContractParams {
 }
 
 export interface ContractParams {
-    id_client: number;
+    client: number;
     status: ContractStatus;
 }
 
@@ -45,7 +45,7 @@ export const getContracts = async (params: ContractParams): Promise<ContractResp
     return await getApiRequest(`/contracts/`, {
         params: {
             status: params?.status,
-            client_id: params?.id_client,
+            client_id: params?.client,
         },
     });
 };

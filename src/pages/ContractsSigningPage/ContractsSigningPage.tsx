@@ -29,7 +29,7 @@ export const ContractsSigningPage: React.FC = () => {
 
     useEffect(() => {
         if (getContractsStatus === FetchStatus.INITIAL) {
-            dispatch(getContractsAction({ id_client: 1, status: ContractStatus.EXECUTION }));
+            dispatch(getContractsAction({ client: 1, status: ContractStatus.EXECUTION }));
         }
     }, [dispatch, getContractsStatus]);
 

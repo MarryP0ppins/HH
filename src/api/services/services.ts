@@ -2,7 +2,7 @@ import { getApiRequest } from 'api';
 
 export interface ServiceResponse {
     id: number;
-    id_user: number;
+    user: number;
     title: string;
     description: string;
     price: number;

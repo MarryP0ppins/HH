@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { ContractIcon } from 'assets';
 import moment from 'moment';
@@ -31,6 +31,7 @@ const cnApp = cn('app');
 
 export const App: React.FC = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const { isAuthorized } = useAppSelector((store) => store.user);
 
@@ -44,20 +45,23 @@ export const App: React.FC = () => {
                 <Link to="/" className={cnApp('title-wrapper')}>
                     <h1 className={cnApp('title')}>PROFI.ru</h1>
                 </Link>
+                {!['/auth', '/registration'].includes(location.pathname) && (
+                    <>
+                        {isAuthorized ? (
+                            <button className={cnApp('button')} onClick={handleLogout}>
+                                Выйти
+                            </button>
+                        ) : (
+                            <Link to="/auth" className={cnApp('button')}>
+                                Авторизация
+                            </Link>
+                        )}
 
-                {isAuthorized ? (
-                    <button className={cnApp('button')} onClick={handleLogout}>
-                        Выйти
-                    </button>
-                ) : (
-                    <Link to="/auth" className={cnApp('button')}>
-                        Авторизация
-                    </Link>
+                        <Link to="/contract-signing">
+                            <ContractIcon width={28} height={28} className={cnApp('contracts')} />
+                        </Link>
+                    </>
                 )}
-
-                <Link to="/contract-signing">
-                    <ContractIcon width={28} height={28} className={cnApp('contracts')} />
-                </Link>
             </div>
             <Routes>
                 <Route path="/" element={<MainPage />} />

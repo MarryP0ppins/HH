@@ -1,10 +1,6 @@
 .authPage {
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    position: absolute;
-    z-index: 10000;
+    width: 100%;
+    height: calc(100vh - 64px);
     background-color: var(--color-background-light);
     display: flex;
     flex-direction: column;
@@ -61,41 +57,4 @@
             background-color: var(--color-main-hover);
         }
     }
-
-    @keyframes shake {
-        0%,
-        100% {
-            transform: translateX(0);
-        }
-        10%,
-        30% {
-            transform: translateX(-7px);
-        }
-        20%,
-        40% {
-            transform: translateX(7px);
-        }
-        50% {
-            transform: translateX(-5px);
-        }
-        60% {
-            transform: translateX(5px);
-        }
-        70% {
-            transform: translateX(-3px);
-        }
-        80% {
-            transform: translateX(3px);
-        }
-        90% {
-            transform: translateX(-1px);
-        }
-    }
-    
-    .wiggle {
-        animation-name: shake;
-        animation-duration: 0.7s;
-        animation-fill-mode: both;
-    }
-    
 }

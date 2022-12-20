@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, Route, Routes } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { ContractIcon } from 'assets';
@@ -6,7 +7,9 @@ import moment from 'moment';
 import { AuthPage } from 'pages/AuthPage';
 import { ContractsSigningPage } from 'pages/ContractsSigningPage';
 import { MainPage } from 'pages/MainPage';
+import { RegistrationPage } from 'pages/RegistrationPage';
 import { ServicePage } from 'pages/ServicePage';
+import { unAuthorizeAction } from 'store/actions/user';
 import { useAppSelector } from 'store/store';
 
 import 'moment-timezone';
@@ -27,24 +30,42 @@ moment.tz.setDefault('Europe/Moscow');
 const cnApp = cn('app');
 
 export const App: React.FC = () => {
+    const dispatch = useDispatch();
+
     const { isAuthorized } = useAppSelector((store) => store.user);
+
+    const handleLogout = useCallback(() => {
+        dispatch(unAuthorizeAction());
+    }, [dispatch]);
 
     return (
         <div className={cnApp()}>
             <div className={cnApp('header')}>
-                <h1 className={cnApp('title')}>PROFI.ru</h1>
-                <Link to="/auth" className={cnApp('button')}>
-                    {isAuthorized ? 'Выйти' : 'Авторизация'}
+                <Link to="/" className={cnApp('title-wrapper')}>
+                    <h1 className={cnApp('title')}>PROFI.ru</h1>
                 </Link>
+
+                {isAuthorized ? (
+                    <button className={cnApp('button')} onClick={handleLogout}>
+                        Выйти
+                    </button>
+                ) : (
+                    <Link to="/auth" className={cnApp('button')}>
+                        Авторизация
+                    </Link>
+                )}
+
                 <Link to="/contract-signing">
                     <ContractIcon width={28} height={28} className={cnApp('contracts')} />
                 </Link>
             </div>
             <Routes>
-                <Route path="/auth" element={<AuthPage />} />
-                <Route path="/service/:id/" element={<ServicePage />} />
                 <Route path="/" element={<MainPage />} />
-                <Route path="/contract-signing" element={<ContractsSigningPage />} />
+                <Route path="/auth" element={<AuthPage />} />
+                <Route path="/registration" element={<RegistrationPage />} />
+                <Route path="/service/:id/" element={isAuthorized ? <ServicePage /> : <AuthPage />} />
+                <Route path="/contract-signing" element={isAuthorized ? <ContractsSigningPage /> : <AuthPage />} />
+                <Route path="*" element={<MainPage />} />
             </Routes>
         </div>
     );

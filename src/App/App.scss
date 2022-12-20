@@ -23,14 +23,18 @@ body {
     padding: 0 20px;
   }
 
-  &-contracts{
+  &-contracts {
     margin-top: 12px;
   }
 
   &-title {
     text-align: start;
-    margin-top: 0;
-    margin-right: auto;
+    margin: 0;
+
+    &-wrapper {
+      margin-right: auto;
+      margin-bottom: 21px;
+    }
   }
 
   &-button {
@@ -46,7 +50,7 @@ body {
     padding: 4px 14px;
     margin-right: 12px;
     &:hover {
-        background-color: var(--color-main-hover);
+      background-color: var(--color-main-hover);
     }
-}
+  }
 }

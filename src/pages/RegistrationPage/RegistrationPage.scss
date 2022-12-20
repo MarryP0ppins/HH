@@ -1,4 +1,4 @@
-.authPage {
+.registrationPage {
     top: 0;
     bottom: 0;
     right: 0;
@@ -42,11 +42,14 @@
         }
     }
 
+    &-field-description {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 20px;
+        margin-right: 12px;
+    }
+
     &-button {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
         margin-bottom: 10px;
         border-radius: 4px;
         border: 0;
@@ -62,40 +65,30 @@
         }
     }
 
-    @keyframes shake {
-        0%,
-        100% {
-            transform: translateX(0);
-        }
-        10%,
-        30% {
-            transform: translateX(-7px);
-        }
-        20%,
-        40% {
-            transform: translateX(7px);
-        }
-        50% {
-            transform: translateX(-5px);
-        }
-        60% {
-            transform: translateX(5px);
-        }
-        70% {
-            transform: translateX(-3px);
-        }
-        80% {
-            transform: translateX(3px);
-        }
-        90% {
-            transform: translateX(-1px);
+    &-radio-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 16px;
+        gap:10px;
+    }
+
+    &-radio-input {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &-input-radio {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 20px;
+        height: 20px;
+
+        &-label {
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 20px;
         }
     }
-    
-    .wiggle {
-        animation-name: shake;
-        animation-duration: 0.7s;
-        animation-fill-mode: both;
-    }
-    
 }

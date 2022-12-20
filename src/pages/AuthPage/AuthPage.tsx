@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { AuthorizationParams } from 'api/services/user';
 import { authorizationAction } from 'store/actions/user';
@@ -14,8 +14,8 @@ const cnAuthPage = cn('authPage');
 export const AuthPage: React.FC = () => {
     const dispatch = useDispatch();
 
-    const { isAuthorized, user } = useAppSelector((store) => store.user);
-    console.log(isAuthorized, user);
+    const { isAuthorized } = useAppSelector((store) => store.user);
+
     const onSubmit = useCallback(
         (values: AuthorizationParams) => {
             dispatch(authorizationAction(values));
@@ -24,7 +24,6 @@ export const AuthPage: React.FC = () => {
     );
 
     if (isAuthorized) {
-        console.log('test');
         return <Navigate to="/" />;
     }
 
@@ -35,10 +34,23 @@ export const AuthPage: React.FC = () => {
                 {({ handleSubmit }) => (
                     <form onSubmit={handleSubmit} className={cnAuthPage('form')}>
                         <Field name="username">
-                            {({ input }) => <input {...input} className={cnAuthPage('input')} />}
+                            {({ input }) => (
+                                <input
+                                    {...input}
+                                    placeholder="Введите имя пользователя"
+                                    className={cnAuthPage('input')}
+                                />
+                            )}
                         </Field>
                         <Field name="password">
-                            {({ input }) => <input {...input} className={cnAuthPage('input')} />}
+                            {({ input }) => (
+                                <input
+                                    {...input}
+                                    type="password"
+                                    placeholder="Введите пароль"
+                                    className={cnAuthPage('input')}
+                                />
+                            )}
                         </Field>
                         <button className={cnAuthPage('button')} type="submit">
                             Войти
@@ -46,9 +58,9 @@ export const AuthPage: React.FC = () => {
                     </form>
                 )}
             </Form>
-            <button className={cnAuthPage('button')} type="button">
+            <Link to="/registration" className={cnAuthPage('button')} type="button">
                 Регистрация
-            </button>
+            </Link>
         </div>
     );
 };

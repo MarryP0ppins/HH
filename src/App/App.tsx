@@ -56,7 +56,6 @@ export const App: React.FC = () => {
                                 Авторизация
                             </Link>
                         )}
-
                         <Link to="/contract-signing">
                             <ContractIcon width={28} height={28} className={cnApp('contracts')} />
                         </Link>

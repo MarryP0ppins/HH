@@ -2,7 +2,7 @@ import { getApiRequest } from 'api';
 
 export interface ServiceResponse {
     id: number;
-    id_user: number;
+    user: number;
     title: string;
     description: string;
     price: number;
@@ -43,5 +43,5 @@ export const getServiceById = async (service_id: number): Promise<ServiceRespons
 };
 
 export const getServicesPriceRange = async (): Promise<ServicesPriceRange> => {
-    return await getApiRequest('/services-price-range/');
+    return await getApiRequest('/services/price_range/');
 };

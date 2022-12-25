@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
-import { AvatarIcon, RubIcon, StarIcon } from 'assets';
+import { AvatarIcon, PenIcon, RubIcon, StarIcon } from 'assets';
 
 import { ServiceCardProps } from 'components/ServiceCard/ServiceCard.types';
 
@@ -8,7 +9,7 @@ import './ServiceCard.scss';
 
 const cnServiceCard = cn('service-card');
 
-export const ServiceCard: React.FC<ServiceCardProps> = ({ serviceInfo }) => {
+export const ServiceCard: React.FC<ServiceCardProps> = ({ serviceInfo, canEdit }) => {
     return (
         <div className={cnServiceCard()}>
             <AvatarIcon />
@@ -25,6 +26,11 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ serviceInfo }) => {
                     <div className={cnServiceCard('description')}>{`${serviceInfo.price}руб.`}</div>
                 </div>
             </div>
+            {canEdit && (
+                <Link to={`/service/edit/${serviceInfo.id}`} className={cnServiceCard('icon-wrapper')}>
+                    <PenIcon className={cnServiceCard('edit-icon')} width={25} height={25} />
+                </Link>
+            )}
         </div>
     );
 };

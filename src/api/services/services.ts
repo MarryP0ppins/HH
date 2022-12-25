@@ -1,4 +1,4 @@
-import { getApiRequest } from 'api';
+import { getApiRequest, patchApiRequest, postApiRequest } from 'api';
 
 export interface ServiceResponse {
     id: number;
@@ -7,7 +7,7 @@ export interface ServiceResponse {
     description: string;
     price: number;
     rating: number;
-    city: number;
+    city: string;
 }
 
 export interface ServicesParams {
@@ -23,6 +23,25 @@ export interface ServicesParams {
 export interface ServicesPriceRange {
     price_min: number;
     price_max: number;
+}
+
+export interface ServicePatch {
+    id: number;
+    user?: number;
+    title?: string;
+    description?: string;
+    price?: number;
+    rating?: number;
+    city?: string;
+}
+
+export interface ServiceCreate {
+    user: number;
+    title: string;
+    description: string;
+    price: number;
+    rating: number;
+    city: string;
 }
 
 export const getServices = async (params?: ServicesParams): Promise<ServiceResponse[]> => {
@@ -44,4 +63,13 @@ export const getServiceById = async (service_id: number): Promise<ServiceRespons
 
 export const getServicesPriceRange = async (): Promise<ServicesPriceRange> => {
     return await getApiRequest('/services/price_range/');
+};
+
+export const patchServiceById = async (params: ServicePatch): Promise<ServiceResponse> => {
+    const { id, ...param } = params;
+    return await patchApiRequest(`/services/${id}/`, param);
+};
+
+export const createService = async (params: ServiceCreate): Promise<ServiceResponse> => {
+    return await postApiRequest(`/services/`, params);
 };

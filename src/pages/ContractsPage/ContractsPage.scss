@@ -1,4 +1,4 @@
-.contracts-signing-page {
+.contracts-page {
     display: flex;
     flex-direction: column;
 
@@ -25,20 +25,27 @@
         padding-top: 20px;
     }
 
+    &-filters {
+        display: flex;
+        flex-direction: row;
+        gap: 14px;
+    }
+
+    &-date{
+        border-radius: 8px;
+        outline: none;
+        border: 2px solid var(--color-main);
+        font-size: 26px;
+    }
+
     &-container {
         max-width: 1320px;
         width: 100%;
         padding: 0 20px;
     }
 
-    &-title {
-        font-size: 32px;
-        font-weight: 600;
-        line-height: 1.2;
-        margin-bottom: 12px;
-    }
-
     &-orders {
+        padding-top: 10px;
         display: flex;
         flex-direction: column;
         gap: 20px;

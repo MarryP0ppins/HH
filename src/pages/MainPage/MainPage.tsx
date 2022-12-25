@@ -3,7 +3,9 @@ import { Field, Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
+import { PlusIcon } from 'assets';
 import { useLoader } from 'hooks/useLoader';
+import { useRole } from 'hooks/useRole';
 import { FilterFormValues } from 'pages/MainPage/MainPage.types';
 import { getServicesAction, getServicesPriceRangeAction } from 'store/actions/services';
 import { resetServicesState } from 'store/reducers/services';
@@ -23,6 +25,9 @@ export const MainPage: React.FC = () => {
         (store) => store.services,
     );
     const { isAuthorized } = useAppSelector((store) => store.user);
+    const { user } = useAppSelector((store) => store.user);
+
+    const { isStaff, isWorker } = useRole();
 
     useLoader([getServicesStatus, getServicesPriceRangeStatus]);
 
@@ -122,13 +127,25 @@ export const MainPage: React.FC = () => {
                 )}
             </Form>
             <div className={cnMainPage('services-wrapper')}>
+                {(isStaff || isWorker) && (
+                    <Link
+                        to={`/service/create/`}
+                        className={cnMainPage('link', { disabled: !isAuthorized, create: true })}
+                    >
+                        <PlusIcon />
+                    </Link>
+                )}
+
                 {services.map((service, serviceIndex) => (
                     <Link
                         key={serviceIndex}
                         to={`/service/${service.id}`}
                         className={cnMainPage('link', { disabled: !isAuthorized })}
                     >
-                        <ServiceCard serviceInfo={service} />
+                        <ServiceCard
+                            serviceInfo={service}
+                            canEdit={isStaff || (isWorker && user?.id === service?.user)}
+                        />
                     </Link>
                 ))}
             </div>

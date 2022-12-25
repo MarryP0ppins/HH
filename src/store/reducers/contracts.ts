@@ -1,9 +1,10 @@
 import { ActionCreatorWithoutPayload, createSlice, SliceCaseReducers } from '@reduxjs/toolkit';
-import { ContractResponse } from 'api/services/contracts';
+import { ContractResponse, ContractStatusResponse } from 'api/services/contracts';
 import {
     createExecutionContractAction,
     deleteContractAction,
     getContractsAction,
+    getContractStatusesAction,
     patchContractAction,
 } from 'store/actions/contracts';
 import { FetchStatus } from 'types/api';
@@ -13,6 +14,8 @@ export interface ContractState {
     getContractsStatus: FetchStatus;
     updateContractStatus: FetchStatus;
     deleteContractStatus: FetchStatus;
+    getContractStatusesStatus: FetchStatus;
+    contractStatuses: ContractStatusResponse[];
     contracts: ContractResponse[];
     error: unknown;
 }
@@ -22,6 +25,8 @@ const initialState: ContractState = {
     getContractsStatus: FetchStatus.INITIAL,
     updateContractStatus: FetchStatus.INITIAL,
     deleteContractStatus: FetchStatus.INITIAL,
+    getContractStatusesStatus: FetchStatus.INITIAL,
+    contractStatuses: [],
     contracts: [],
     error: null,
 };
@@ -87,6 +92,20 @@ const contractsSlice = createSlice<ContractState, SliceCaseReducers<ContractStat
             })
             .addCase(deleteContractAction.rejected, (state, { error }) => {
                 state.deleteContractStatus = FetchStatus.ERROR;
+                state.error = error;
+            });
+        builder
+            .addCase(getContractStatusesAction.pending, (state) => {
+                state.getContractStatusesStatus = FetchStatus.FETCHING;
+                state.error = null;
+            })
+            .addCase(getContractStatusesAction.fulfilled, (state, { payload }) => {
+                state.getContractStatusesStatus = FetchStatus.FETCHED;
+                state.contractStatuses = payload;
+                state.error = null;
+            })
+            .addCase(getContractStatusesAction.rejected, (state, { error }) => {
+                state.getContractStatusesStatus = FetchStatus.ERROR;
                 state.error = error;
             });
     },

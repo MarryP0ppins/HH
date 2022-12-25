@@ -1,13 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { ContractIcon } from 'assets';
 import moment from 'moment';
 import { AuthPage } from 'pages/AuthPage';
-import { ContractsSigningPage } from 'pages/ContractsSigningPage';
+import { ContractsPage } from 'pages/ContractsPage';
 import { MainPage } from 'pages/MainPage';
 import { RegistrationPage } from 'pages/RegistrationPage';
+import { ServiceEditPage } from 'pages/ServiceEditPage';
 import { ServicePage } from 'pages/ServicePage';
 import { unAuthorizeAction } from 'store/actions/user';
 import { useAppSelector } from 'store/store';
@@ -39,6 +40,8 @@ export const App: React.FC = () => {
         dispatch(unAuthorizeAction());
     }, [dispatch]);
 
+    useEffect(() => window.addEventListener('unload', handleLogout), [dispatch, handleLogout]);
+
     return (
         <div className={cnApp()}>
             <div className={cnApp('header')}>
@@ -56,7 +59,7 @@ export const App: React.FC = () => {
                                 Авторизация
                             </Link>
                         )}
-                        <Link to="/contract-signing">
+                        <Link to="/contracts">
                             <ContractIcon width={28} height={28} className={cnApp('contracts')} />
                         </Link>
                     </>
@@ -67,8 +70,17 @@ export const App: React.FC = () => {
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/registration" element={<RegistrationPage />} />
                 <Route path="/service/:id/" element={isAuthorized ? <ServicePage /> : <AuthPage />} />
-                <Route path="/contract-signing" element={isAuthorized ? <ContractsSigningPage /> : <AuthPage />} />
-                <Route path="*" element={<MainPage />} />
+                <Route path="/contracts" element={isAuthorized ? <ContractsPage /> : <AuthPage />} />
+                <Route
+                    path="/service/edit/:id"
+                    element={isAuthorized ? <ServiceEditPage isCreateMode={false} /> : <AuthPage />}
+                />
+                <Route
+                    path="/service/create"
+                    element={isAuthorized ? <ServiceEditPage isCreateMode={true} /> : <AuthPage />}
+                />
+                <Route path="/contracts" element={isAuthorized ? <ContractsPage /> : <AuthPage />} />
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </div>
     );

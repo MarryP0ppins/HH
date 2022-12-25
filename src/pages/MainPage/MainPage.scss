@@ -50,8 +50,27 @@
     &-link {
         text-decoration: none;
 
-        &_disabled{
+        &_disabled {
             pointer-events: none;
+        }
+
+        &_create {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 220px;
+            height: auto;
+            min-height: 200px;
+            background-color: transparent;
+            border: 2px dashed #959595;
+            display: flex;
+            flex-direction: column;
+            border-radius: 6px;
+
+            svg {
+                width: 200px;
+                height: auto;
+            }
         }
     }
 }

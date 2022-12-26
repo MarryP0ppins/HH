@@ -34,9 +34,13 @@ export interface PatchContractParams {
 
 export interface ContractParams {
     client: number;
-    status: ContractStatus;
+    status?: ContractStatus;
 }
 
+export interface ContractStatusResponse {
+    value: string;
+    label: string;
+}
 
 export const createExecutionContract = async (params: PostContractParams): Promise<ContractResponse> => {
     return await postApiRequest(`/contracts/`, params);
@@ -57,5 +61,9 @@ export const patchContract = async (params: PatchContractParams): Promise<Contra
 };
 
 export const deleteContract = async (contract_id: number): Promise<ContractResponse> => {
-    return await deleteApiRequest(`/v/${contract_id}/`);
+    return await deleteApiRequest(`/contracts/${contract_id}/`);
+};
+
+export const getContractStatuses = async (): Promise<ContractStatusResponse[]> => {
+    return await getApiRequest(`/contracts/contract_statuses/`);
 };

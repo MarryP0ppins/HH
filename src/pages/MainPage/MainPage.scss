@@ -39,6 +39,24 @@
         }
     }
 
+    &-workerInterface {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-bottom: 20px;
+
+        &-option{
+            border:3px solid var(--color-main-light);
+            border-radius: 6px;
+            font-size: 26px;
+            font-weight: 600px;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+    }
+
     &-services-wrapper {
         width: 100%;
         display: flex;
@@ -50,8 +68,27 @@
     &-link {
         text-decoration: none;
 
-        &_disabled{
+        &_disabled {
             pointer-events: none;
+        }
+
+        &_create {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 220px;
+            height: auto;
+            min-height: 200px;
+            background-color: transparent;
+            border: 2px dashed #959595;
+            display: flex;
+            flex-direction: column;
+            border-radius: 6px;
+
+            svg {
+                width: 200px;
+                height: auto;
+            }
         }
     }
 }

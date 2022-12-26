@@ -1,12 +1,14 @@
 import { ActionCreatorWithoutPayload, createSlice, SliceCaseReducers } from '@reduxjs/toolkit';
-import { AuthorizationResponse } from 'api/services/user';
-import { authorizationAction, registrationAction, unAuthorizeAction } from 'store/actions/user';
+import { AuthorizationResponse, UsersResponse } from 'api/services/user';
+import { authorizationAction, getUsersAction, registrationAction, unAuthorizeAction } from 'store/actions/user';
 import { FetchStatus } from 'types/api';
 
 export interface UserState {
     loginStatus: FetchStatus;
     registrationStatus: FetchStatus;
     logoutStatus: FetchStatus;
+    getUsersStatus: FetchStatus;
+    users: UsersResponse[];
     user: AuthorizationResponse | null;
     isAuthorized: boolean;
     error: unknown;
@@ -16,6 +18,8 @@ const initialState: UserState = {
     loginStatus: FetchStatus.INITIAL,
     registrationStatus: FetchStatus.INITIAL,
     logoutStatus: FetchStatus.INITIAL,
+    getUsersStatus: FetchStatus.INITIAL,
+    users: [],
     user: null,
     isAuthorized: false,
     error: null,
@@ -65,10 +69,25 @@ const userSlice = createSlice<UserState, SliceCaseReducers<UserState>>({
             .addCase(unAuthorizeAction.fulfilled, (state) => {
                 state.logoutStatus = FetchStatus.FETCHED;
                 state.isAuthorized = false;
+                state.user = null;
                 state.error = null;
             })
             .addCase(unAuthorizeAction.rejected, (state, { error }) => {
                 state.logoutStatus = FetchStatus.ERROR;
+                state.error = error;
+            });
+        builder
+            .addCase(getUsersAction.pending, (state) => {
+                state.getUsersStatus = FetchStatus.FETCHING;
+                state.error = null;
+            })
+            .addCase(getUsersAction.fulfilled, (state, { payload }) => {
+                state.logoutStatus = FetchStatus.FETCHED;
+                state.users = payload;
+                state.error = null;
+            })
+            .addCase(getUsersAction.rejected, (state, { error }) => {
+                state.getUsersStatus = FetchStatus.ERROR;
                 state.error = error;
             });
     },

@@ -1,4 +1,4 @@
-import { postApiRequest } from 'api';
+import { getApiRequest, postApiRequest } from 'api';
 
 export enum SEX {
     MALE = 'MALE',
@@ -30,6 +30,16 @@ export interface RegistrationParams {
     sex: SEX;
 }
 
+export interface UsersResponse {
+    id: number;
+    email: string;
+    username: string;
+    birth_date: string;
+    sex: SEX;
+    created_at: string;
+    is_worker:boolean;
+}
+
 export const authorization = async (params: AuthorizationParams): Promise<AuthorizationResponse> => {
     return await postApiRequest(`/login/`, params);
 };
@@ -38,6 +48,10 @@ export const registration = async (params: RegistrationParams): Promise<Authoriz
     return await postApiRequest(`/registration/`, params);
 };
 
-export const unAuthorize = async (): Promise<unknown>  => {
+export const unAuthorize = async (): Promise<unknown> => {
     return await postApiRequest(`/logout/`);
+};
+
+export const getUsers = async (): Promise<UsersResponse[]> => {
+    return await getApiRequest(`/users/`);
 };

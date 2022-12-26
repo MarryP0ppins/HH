@@ -87,7 +87,7 @@ const contractsSlice = createSlice<ContractState, SliceCaseReducers<ContractStat
             })
             .addCase(deleteContractAction.fulfilled, (state, { payload }) => {
                 state.deleteContractStatus = FetchStatus.FETCHED;
-                state.contracts = state.contracts.filter((contract) => contract.id !== payload);
+                state.contracts = state.contracts.filter((contract) => contract.id !== payload.id);
                 state.error = null;
             })
             .addCase(deleteContractAction.rejected, (state, { error }) => {

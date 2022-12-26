@@ -23,8 +23,7 @@ export const patchContractAction = createAsyncThunk('contracts/update', (params:
 });
 
 export const deleteContractAction = createAsyncThunk('contracts/delete', (id_ticket: number) => {
-    void deleteContract(id_ticket);
-    return id_ticket;
+    return deleteContract(id_ticket);
 });
 
 export const getContractStatusesAction = createAsyncThunk('contracts/contract_statuses', () => {

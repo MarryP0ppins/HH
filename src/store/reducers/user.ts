@@ -69,6 +69,7 @@ const userSlice = createSlice<UserState, SliceCaseReducers<UserState>>({
             .addCase(unAuthorizeAction.fulfilled, (state) => {
                 state.logoutStatus = FetchStatus.FETCHED;
                 state.isAuthorized = false;
+                state.user = null;
                 state.error = null;
             })
             .addCase(unAuthorizeAction.rejected, (state, { error }) => {

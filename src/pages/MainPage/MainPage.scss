@@ -39,6 +39,24 @@
         }
     }
 
+    &-workerInterface {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-bottom: 20px;
+
+        &-option{
+            border:3px solid var(--color-main-light);
+            border-radius: 6px;
+            font-size: 26px;
+            font-weight: 600px;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+    }
+
     &-services-wrapper {
         width: 100%;
         display: flex;

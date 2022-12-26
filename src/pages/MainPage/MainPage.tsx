@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
+import { ServiceResponse } from 'api/services/services';
 import { PlusIcon } from 'assets';
 import { useLoader } from 'hooks/useLoader';
 import { useRole } from 'hooks/useRole';
@@ -21,6 +22,8 @@ const cnMainPage = cn('main-page');
 
 export const MainPage: React.FC = () => {
     const dispatch = useDispatch();
+
+    const [workerServices, setWorkerServices] = useState(false);
     const { services, getServicesStatus, servicesPriceRange, getServicesPriceRangeStatus } = useAppSelector(
         (store) => store.services,
     );
@@ -54,6 +57,15 @@ export const MainPage: React.FC = () => {
             ),
         [dispatch],
     );
+
+    const handleWorkerInterfaceChange = useCallback((myServices: boolean) => () => setWorkerServices(myServices), []);
+
+    const servicesFiltered = useMemo(() => {
+        const myServices: ServiceResponse[] = [];
+        const otherServices: ServiceResponse[] = [];
+        services?.forEach((service) => (service?.user === user?.id ? myServices : otherServices).push(service));
+        return { myServices, otherServices };
+    }, [services, user?.id]);
 
     useEffect(
         () => () => {
@@ -126,8 +138,18 @@ export const MainPage: React.FC = () => {
                     </>
                 )}
             </Form>
+            {isWorker && (
+                <div className={cnMainPage('workerInterface')}>
+                    <div className={cnMainPage('workerInterface-option')} onClick={handleWorkerInterfaceChange(false)}>
+                        Доступные услуги
+                    </div>
+                    <div className={cnMainPage('workerInterface-option')} onClick={handleWorkerInterfaceChange(true)}>
+                        Мои услуги
+                    </div>
+                </div>
+            )}
             <div className={cnMainPage('services-wrapper')}>
-                {(isStaff || isWorker) && (
+                {(workerServices || isStaff) && (
                     <Link
                         to={`/service/create/`}
                         className={cnMainPage('link', { disabled: !isAuthorized, create: true })}
@@ -135,17 +157,18 @@ export const MainPage: React.FC = () => {
                         <PlusIcon />
                     </Link>
                 )}
-
-                {services.map((service, serviceIndex) => (
+                {(isWorker
+                    ? workerServices
+                        ? servicesFiltered.myServices
+                        : servicesFiltered.otherServices
+                    : services
+                ).map((service, serviceIndex) => (
                     <Link
                         key={serviceIndex}
                         to={`/service/${service.id}`}
                         className={cnMainPage('link', { disabled: !isAuthorized })}
                     >
-                        <ServiceCard
-                            serviceInfo={service}
-                            canEdit={isStaff || (isWorker && user?.id === service?.user)}
-                        />
+                        <ServiceCard serviceInfo={service} canEdit={workerServices || isStaff} />
                     </Link>
                 ))}
             </div>

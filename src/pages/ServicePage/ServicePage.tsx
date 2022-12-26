@@ -25,7 +25,7 @@ export const ServicePage: React.FC = () => {
     const [hiringDuration, setHiringDuration] = useState<number | string>();
     const { services, getServiceByIdStatus } = useAppSelector((store) => store.services);
     const { createExecutionContractStatus } = useAppSelector((store) => store.contracts);
-    const {user} = useAppSelector((store)=>store.user)
+    const { user } = useAppSelector((store) => store.user);
 
     useLoader([createExecutionContractStatus, getServiceByIdStatus]);
 
@@ -54,7 +54,6 @@ export const ServicePage: React.FC = () => {
                     duration: Number(hiringDuration),
                 }),
             );
-            setHiringDuration('');
         }
     }, [dispatch, hiringDuration, service_id, user?.id]);
 
@@ -109,15 +108,17 @@ export const ServicePage: React.FC = () => {
                                         onChange={onHiringDurationChange}
                                         placeholder="Кол-во дней"
                                     />
-                                    <button
-                                        disabled={!hiringDuration || hiringDuration < 1}
-                                        className={cnServicePage('hiring-button', {
-                                            active: hiringDuration && hiringDuration >= 1,
-                                        })}
-                                        onClick={handleExecutedService}
-                                    >
-                                        Оформить контракт
-                                    </button>
+                                    <Link to="/">
+                                        <button
+                                            disabled={!hiringDuration || hiringDuration < 1}
+                                            className={cnServicePage('hiring-button', {
+                                                active: hiringDuration && hiringDuration >= 1,
+                                            })}
+                                            onClick={handleExecutedService}
+                                        >
+                                            Оформить контракт
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                             <div className={cnServicePage('about')}>

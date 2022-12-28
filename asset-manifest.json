@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/HH/static/css/main.1bde88a9.css",
-    "main.js": "/HH/static/js/main.fd0bdaa3.js",
+    "main.css": "/HH/static/css/main.7810ac1d.css",
+    "main.js": "/HH/static/js/main.88cbe2a8.js",
     "static/js/787.832a2d4b.chunk.js": "/HH/static/js/787.832a2d4b.chunk.js",
     "static/media/contract-icon.svg": "/HH/static/media/contract-icon.f4a2b860132abd928efce71d8d4891fb.svg",
     "static/media/loader.svg": "/HH/static/media/loader.f4824119e57216062c1553d1a4ec428d.svg",
@@ -12,12 +12,12 @@
     "static/media/plus-icon.svg": "/HH/static/media/plus-icon.86fca661df4c4c6d4bec7281378f4842.svg",
     "static/media/open-selector-icon.svg": "/HH/static/media/open-selector-icon.5fc0e2847541bc5c420993a502c2169c.svg",
     "static/media/rub-icon.svg": "/HH/static/media/rub-icon.f098692d59076814ff9c005bc8628f76.svg",
-    "main.1bde88a9.css.map": "/HH/static/css/main.1bde88a9.css.map",
-    "main.fd0bdaa3.js.map": "/HH/static/js/main.fd0bdaa3.js.map",
+    "main.7810ac1d.css.map": "/HH/static/css/main.7810ac1d.css.map",
+    "main.88cbe2a8.js.map": "/HH/static/js/main.88cbe2a8.js.map",
     "787.832a2d4b.chunk.js.map": "/HH/static/js/787.832a2d4b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1bde88a9.css",
-    "static/js/main.fd0bdaa3.js"
+    "static/css/main.7810ac1d.css",
+    "static/js/main.88cbe2a8.js"
   ]
 }

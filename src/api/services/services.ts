@@ -14,6 +14,7 @@ export interface ServicesParams {
     all?: boolean;
     services_ids?: number[];
     title?: string;
+    user?: number;
     price_max?: number;
     price_min?: number;
     rating?: number;
@@ -52,6 +53,7 @@ export const getServices = async (params?: ServicesParams): Promise<ServiceRespo
             price_max: params?.price_max,
             price_min: params?.price_min,
             rating: params?.rating,
+            user: params?.user,
             city: params?.city,
         },
     });

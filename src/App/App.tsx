@@ -69,7 +69,7 @@ export const App: React.FC = () => {
                 <Route path="/" element={<MainPage />} />
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/registration" element={<RegistrationPage />} />
-                <Route path="/service/:id/" element={isAuthorized ? <ServicePage /> : <AuthPage />} />
+                <Route path="/service/:id/" element={<ServicePage />} />
                 <Route path="/contracts" element={isAuthorized ? <ContractsPage /> : <AuthPage />} />
                 <Route
                     path="/service/edit/:id"
@@ -79,7 +79,6 @@ export const App: React.FC = () => {
                     path="/service/create"
                     element={isAuthorized ? <ServiceEditPage isCreateMode={true} /> : <AuthPage />}
                 />
-                <Route path="/contracts" element={isAuthorized ? <ContractsPage /> : <AuthPage />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </div>

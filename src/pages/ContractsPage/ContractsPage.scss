@@ -29,9 +29,17 @@
         display: flex;
         flex-direction: row;
         gap: 14px;
+
+        .dropdownSelect {
+            width: 430px;
+        }
+
+        .dropdownSelect-options {
+            width: 430px;
+        }
     }
 
-    &-date{
+    &-date {
         border-radius: 8px;
         outline: none;
         border: 2px solid var(--color-main);

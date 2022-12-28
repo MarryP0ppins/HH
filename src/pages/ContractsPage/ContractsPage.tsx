@@ -5,11 +5,14 @@ import { cn } from '@bem-react/classname';
 import { ContractStatus } from 'api/services/contracts';
 import { AvatarIcon } from 'assets';
 import { useLoader } from 'hooks/useLoader';
+import { useRole } from 'hooks/useRole';
 import moment from 'moment';
 import {
     deleteContractAction,
     getContractsAction,
     getContractStatusesAction,
+    getRequestContractsAction,
+    getWorkerActualContractsAction,
     patchContractAction,
 } from 'store/actions/contracts';
 import { getServicesAction } from 'store/actions/services';
@@ -38,11 +41,16 @@ export const ContractsPage: React.FC = () => {
         deleteContractStatus,
         getContractStatusesStatus,
         contractStatuses,
+        getRequestContractsStatus,
+        workerContracts,
+        getWorkerContracts,
     } = useAppSelector((store) => store.contracts);
 
     const { services, getServicesStatus } = useAppSelector((store) => store.services);
 
     const { user } = useAppSelector((store) => store.user);
+
+    const { isStaff, isWorker } = useRole();
 
     useLoader([
         getContractsStatus,
@@ -50,6 +58,7 @@ export const ContractsPage: React.FC = () => {
         deleteContractStatus,
         getServicesStatus,
         getContractStatusesStatus,
+        getRequestContractsStatus,
     ]);
 
     useEffect(() => {
@@ -65,6 +74,18 @@ export const ContractsPage: React.FC = () => {
     }, [dispatch, getContractStatusesStatus]);
 
     useEffect(() => {
+        if (getRequestContractsStatus === FetchStatus.INITIAL) {
+            dispatch(getRequestContractsAction());
+        }
+    }, [dispatch, getRequestContractsStatus]);
+
+    useEffect(() => {
+        if (getWorkerContracts === FetchStatus.INITIAL) {
+            dispatch(getWorkerActualContractsAction(user?.id ?? -1));
+        }
+    }, [dispatch, getWorkerContracts, user?.id]);
+
+    useEffect(() => {
         if (getServicesStatus === FetchStatus.INITIAL && Boolean(contracts?.length)) {
             dispatch(
                 getServicesAction({
@@ -77,22 +98,40 @@ export const ContractsPage: React.FC = () => {
 
     const handleSigningContract = useCallback(
         (contract_id: number) => () => {
-            dispatch(
-                patchContractAction({
-                    id: contract_id,
-                    status: ContractStatus.SIGN,
-                    date_of_signing: moment().format(),
-                }),
-            );
+            if (dropdownValue === ContractStatus.REQUEST) {
+                dispatch(
+                    patchContractAction({
+                        id: contract_id,
+                        status: ContractStatus.SIGN,
+                    }),
+                );
+            } else {
+                dispatch(
+                    patchContractAction({
+                        id: contract_id,
+                        status: ContractStatus.SIGN,
+                        date_of_signing: moment().format(),
+                    }),
+                );
+            }
         },
-        [dispatch],
+        [dispatch, dropdownValue],
     );
 
     const handleRejectingContract = useCallback(
         (contract_id: number) => () => {
-            dispatch(deleteContractAction(contract_id));
+            if (dropdownValue === ContractStatus.SIGN) {
+                dispatch(
+                    patchContractAction({
+                        id: contract_id,
+                        status: ContractStatus.REQUEST,
+                    }),
+                );
+            } else {
+                dispatch(deleteContractAction(contract_id));
+            }
         },
-        [dispatch],
+        [dispatch, dropdownValue],
     );
 
     const handleDropDownChange = useCallback(
@@ -102,21 +141,28 @@ export const ContractsPage: React.FC = () => {
         [contractStatuses],
     );
 
-    const dropdownOptions = useMemo(() => contractStatuses?.map((status) => status.label), [contractStatuses]);
+    const dropdownOptions = useMemo(
+        () =>
+            contractStatuses
+                ?.filter((status) => (!isStaff ? status.value !== ContractStatus.REQUEST : true))
+                ?.map((status) => status.label),
+        [contractStatuses, isStaff],
+    );
 
     const contractsFiltered = useMemo(
         () =>
-            contracts.filter(
-                (contract) =>
+            contracts.concat(isWorker ? workerContracts : []).filter((contract) => {
+                return (
                     contract.status === dropdownValue &&
                     (startDate && dropdownValue === ContractStatus.SIGN
                         ? moment(contract.date_of_signing).isSameOrAfter(startDate, 'days')
                         : true) &&
                     (endDate && dropdownValue === ContractStatus.SIGN
                         ? moment(contract.date_of_signing).isSameOrBefore(endDate, 'days')
-                        : true),
-            ),
-        [contracts, dropdownValue, endDate, startDate],
+                        : true)
+                );
+            }),
+        [contracts, dropdownValue, endDate, isWorker, startDate, workerContracts],
     );
 
     const handleStartDateChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -224,24 +270,29 @@ export const ContractsPage: React.FC = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {dropdownValue !== 'SIGN' && (
-                                                    <div className={cnContractsPage('buttons')}>
+
+                                                <div className={cnContractsPage('buttons')}>
+                                                    {dropdownValue !== ContractStatus.SIGN && (
                                                         <button
                                                             type="button"
                                                             className={cnContractsPage('button', { action: true })}
                                                             onClick={handleSigningContract(contract.id)}
                                                         >
-                                                            Подписать договор
+                                                            {dropdownValue === ContractStatus.REQUEST
+                                                                ? 'Отказать в расторжении'
+                                                                : 'Подписать договор'}
                                                         </button>
-                                                        <button
-                                                            type="button"
-                                                            className={cnContractsPage('button')}
-                                                            onClick={handleRejectingContract(contract.id)}
-                                                        >
-                                                            Расторгнуть договор
-                                                        </button>
-                                                    </div>
-                                                )}
+                                                    )}
+                                                    <button
+                                                        type="button"
+                                                        className={cnContractsPage('button')}
+                                                        onClick={handleRejectingContract(contract.id)}
+                                                    >
+                                                        {dropdownValue === ContractStatus.SIGN
+                                                            ? 'Запрос на расторжение'
+                                                            : 'Расторгнуть договор'}
+                                                    </button>
+                                                </div>
                                             </div>
                                         )}
                                     </>

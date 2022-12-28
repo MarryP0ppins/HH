@@ -4,6 +4,7 @@ export enum ContractStatus {
     EXECUTION = 'EXECUTION',
     SIGN = 'SIGN',
     RESIGNING = 'RESIGNING',
+    REQUEST = 'REQUEST',
 }
 
 export interface ContractResponse {
@@ -33,8 +34,9 @@ export interface PatchContractParams {
 }
 
 export interface ContractParams {
-    client: number;
+    client?: number;
     status?: ContractStatus;
+    services?: string;
 }
 
 export interface ContractStatusResponse {
@@ -51,6 +53,7 @@ export const getContracts = async (params: ContractParams): Promise<ContractResp
         params: {
             status: params?.status,
             client_id: params?.client,
+            services: params?.services,
         },
     });
 };

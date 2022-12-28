@@ -89,7 +89,6 @@ export const MainPage: React.FC = () => {
                                             className={cnMainPage('filter-input')}
                                             type="text"
                                             placeholder="Сфера деятельности"
-                                            disabled={!isAuthorized}
                                         />
                                     )}
                                 </Field>
@@ -107,7 +106,6 @@ export const MainPage: React.FC = () => {
                                                 className={cnMainPage('filter-input')}
                                                 type="number"
                                                 placeholder={`Мин. цена ${servicesPriceRange.price_min}руб.`}
-                                                disabled={!isAuthorized}
                                             />
                                         );
                                     }}
@@ -125,12 +123,11 @@ export const MainPage: React.FC = () => {
                                                 className={cnMainPage('filter-input')}
                                                 type="number"
                                                 placeholder={`Макс. цена ${servicesPriceRange.price_max}руб.`}
-                                                disabled={!isAuthorized}
                                             />
                                         );
                                     }}
                                 </Field>
-                                <button type="submit" className={cnMainPage('filter-button')} disabled={!isAuthorized}>
+                                <button type="submit" className={cnMainPage('filter-button')}>
                                     Поиск
                                 </button>
                             </form>
@@ -166,7 +163,7 @@ export const MainPage: React.FC = () => {
                     <Link
                         key={serviceIndex}
                         to={`/service/${service.id}`}
-                        className={cnMainPage('link', { disabled: !isAuthorized })}
+                        className={cnMainPage('link')}
                     >
                         <ServiceCard serviceInfo={service} canEdit={workerServices || isStaff} />
                     </Link>
